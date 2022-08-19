@@ -1,11 +1,40 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Blastoise from 'assets/blastoise.jpg'
 // import Fallback from 'assets/fallback.jpg'
+
+const pokemonQuery = `
+  {
+    pokemon(name: "blastoise") {
+      id
+      number
+      name
+      image
+      attacks {
+        special {
+          name
+          type
+          damage
+        }
+      }
+    }
+  }
+`
 
 function App() {
   const [pokemonName, setPokemonName] = useState('')
 
-  const handleSelect = (newPokemonName) => setPokemonName(newPokemonName)
+  useEffect(() => {
+    window
+      .fetch('https://graphql-pokemon2.vercel.app/', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json;charset=UTF-8' },
+        body: JSON.stringify({ query: pokemonQuery })
+      })
+      .then((res) => res.json())
+      .then((data) => console.log(data.data.pokemon))
+  }, [pokemonName])
+
+  const handleSelect = (selectedName) => setPokemonName(selectedName)
 
   const handleChange = (e) => setPokemonName(e.target.value)
 
@@ -40,11 +69,13 @@ function App() {
           <input
             className="mt-2.5 mr-2.5 rounded-sm bg-zinc-100 px-2.5 leading-loose shadow-md"
             placeholder="Pokemon Name..."
+            value={pokemonName}
             onChange={handleChange}
           />
           <button
             className="rounded-md border border-solid bg-red-600 py-1.5 px-2.5 text-white hover:bg-red-700 disabled:bg-red-700"
             type="submit"
+            disabled={!pokemonName.length}
           >
             Submit
           </button>
