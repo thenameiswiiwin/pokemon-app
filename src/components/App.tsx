@@ -1,23 +1,46 @@
+import { useState } from 'react'
 import Blastoise from 'assets/blastoise.jpg'
 // import Fallback from 'assets/fallback.jpg'
 
 function App() {
+  const [pokemonName, setPokemonName] = useState('')
+
+  const handleSelect = (newPokemonName) => setPokemonName(newPokemonName)
+
+  const handleChange = (e) => setPokemonName(e.target.value)
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setPokemonName(pokemonName)
+  }
+
   return (
     <div className="mt-14 flex flex-col items-center justify-center font-semibold">
       {/* Forum */}
-      <form className="flex flex-col items-center justify-center">
+      <form
+        className="flex flex-col items-center justify-center"
+        onSubmit={handleSubmit}
+      >
         <label htmlFor="pokemonName-input">Pokemon Name</label>
         <small className="font-medium">
-          Try <button type="button">Venusaur</button>
+          Try{' '}
+          <button type="button" onClick={() => handleSelect('venusaur')}>
+            Venusaur
+          </button>
           {', '}
-          <button type="button">Charizard</button>
+          <button type="button" onClick={() => handleSelect('charizard')}>
+            Charizard
+          </button>
           {', or '}
-          <button type="button">Blastoise</button>
+          <button type="button" onClick={() => handleSelect('blastoise')}>
+            Blastoise
+          </button>
         </small>
         <div>
           <input
             className="mt-2.5 mr-2.5 rounded-sm bg-zinc-100 px-2.5 leading-loose shadow-md"
             placeholder="Pokemon Name..."
+            onChange={handleChange}
           />
           <button
             className="rounded-md border border-solid bg-red-600 py-1.5 px-2.5 text-white hover:bg-red-700 disabled:bg-red-700"
