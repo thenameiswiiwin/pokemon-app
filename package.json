@@ -1,11 +1,20 @@
 {
   "name": "pokemon-app",
+  "description": "This is a React + vite app to be used with Tailwindcss.",
+  "version": "0.1.0",
   "private": true,
-  "version": "0.0.0",
+  "author": {
+    "name": "Huy Nguyen",
+    "email": "huyn.nguyen95@gmail.com",
+    "url": "https://github.com/thenameiswiiwin"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "serve": "vite preview",
+    "test": "jest",
+    "lint": "eslint src --max-warnings=0",
+    "typecheck": "tsc --project tsconfig.json --noEmit"
   },
   "dependencies": {
     "react": "^18.2.0",
