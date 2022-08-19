@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react'
-import Blastoise from 'assets/blastoise.jpg'
 // import Fallback from 'assets/fallback.jpg'
 
 const pokemonQuery = `
   {
-    pokemon(name: "blastoise") {
+    pokemon(name: "venusaur") {
       id
       number
       name
@@ -22,6 +21,7 @@ const pokemonQuery = `
 
 function App() {
   const [pokemonName, setPokemonName] = useState('')
+  const [pokemon, setPokemon] = useState(null)
 
   useEffect(() => {
     window
@@ -31,7 +31,7 @@ function App() {
         body: JSON.stringify({ query: pokemonQuery })
       })
       .then((res) => res.json())
-      .then((data) => console.log(data.data.pokemon))
+      .then((data) => setPokemon(data.data.pokemon))
   }, [pokemonName])
 
   const handleSelect = (selectedName) => setPokemonName(selectedName)
@@ -93,28 +93,23 @@ function App() {
             <small className="self-end">10:08 50.405</small>
             <img
               className="max-h-52 max-w-full"
-              src={Blastoise}
-              alt="Blastoise"
+              src={pokemon.image}
+              alt={pokemon.name}
             />
             <h2 className="mt-2 text-center text-2xl font-extrabold">
-              Blastoise
-              <sup>009</sup>
+              {pokemon.name}
+              <sup>{pokemon.number}</sup>
             </h2>
           </section>
           <section>
             <ul className="list-disc leading-none">
-              <li>
-                Flash Cannon: 60 <small>(Steel)</small>
-              </li>
-              <li>
-                Gunk Shot: 65 <small>(Poison)</small>
-              </li>
-              <li>
-                Hydrop Pump: 90 <small>(Water)</small>
-              </li>
-              <li>
-                Ice Beam: 65 <small>(Ice)</small>
-              </li>
+              {pokemon.attacks.special.map(attack => (
+                <li>
+                  <label>{attack.name}</label>:{' '}
+                  <span>{pokemon.damage} <small>({attack.type})</small>
+                  </span>
+                </li>
+              ))}
             </ul>
           </section>
         </div>
