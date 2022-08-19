@@ -22,7 +22,7 @@ function App() {
         onSubmit={handleSubmit}
       >
         <label htmlFor="pokemonName-input">Pokemon Name</label>
-        <small>
+        <small className="font-medium">
           Try{' '}
           <button type="button" onClick={() => handleSelect('venusaur')}>
             Venusaur
