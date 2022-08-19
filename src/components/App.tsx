@@ -32,9 +32,9 @@ function App() {
       <hr className="my-7" />
 
       {/* Card */}
-      <div className="h-96 w-72 overflow-auto rounded bg-zinc-100 p-5">
+      <div className="h-116 w-72 overflow-auto rounded bg-zinc-100 p-5">
         {/* Display */}
-        {/* <div className="flex h-full flex-col items-center">
+        <div className="flex h-full flex-col items-center">
           <section className="mb-4 flex flex-col justify-center">
             <small className="self-end">10:08 50.405</small>
             <img
@@ -63,29 +63,33 @@ function App() {
               </li>
             </ul>
           </section>
-        </div> */}
+        </div>
 
         {/* Fallback */}
-        <div>
-          <section>
-            <small>loading...</small>
-            <img src={Fallback} alt="Fallback" />
-            <h2>
+        {/* <div className="flex h-full flex-col items-center">
+          <section className="mb-4 flex flex-col justify-center">
+            <small className="self-end">loading...</small>
+            <img
+              className="max-h-52 max-w-full"
+              src={Fallback}
+              alt="Blastoise"
+            />
+            <h2 className="mt-2 text-center text-2xl font-extrabold">
               error
               <sup>XXX</sup>
             </h2>
           </section>
           <section>
-            <ul>
+            <ul className="list-disc leading-none">
               <li>
                 Loading Attack 1: XX <small>(Type)</small>
               </li>
               <li>
-                Loading Attack 2: XX <small>(Type)</small>
+                Loading Attack 1: XX <small>(Type)</small>
               </li>
             </ul>
           </section>
-        </div>
+        </div> */}
       </div>
     </div>
   )
