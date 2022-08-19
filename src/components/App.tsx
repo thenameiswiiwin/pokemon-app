@@ -2,9 +2,9 @@ import Blastoise from 'assets/blastoise.jpg'
 
 function App() {
   return (
-    <div>
+    <div className="mt-14 flex flex-col items-center justify-center font-semibold">
       {/* Forum */}
-      <form>
+      <form className="flex flex-col items-center justify-center">
         <label htmlFor="pokemonName-input">Pokemon Name</label>
         <small>
           Try <button type="button">Venusaur</button>
@@ -14,30 +14,40 @@ function App() {
           <button type="button">Blastoise</button>
         </small>
         <div>
-          <input placeholder="Pokemon Name..." />
-          <button type="submit">Submit</button>
+          <input
+            className="mt-2.5 mr-2.5 rounded-sm bg-zinc-100 px-2.5 leading-loose shadow-md"
+            placeholder="Pokemon Name..."
+          />
+          <button
+            className="rounded-md border border-solid bg-red-600 py-1.5 px-2.5 text-white hover:bg-red-700 disabled:bg-red-700"
+            type="submit"
+          >
+            Submit
+          </button>
         </div>
       </form>
-      {/* <!-- End Forum -->*/}
 
       {/* Line Break */}
-      <hr />
+      <hr className="my-7" />
 
       {/* Card */}
-      <div>
-        {/* Info */}
-        <div>
-          {/* Display */}
-          <section>
-            <small>10:08 50.405</small>
-            <img src={Blastoise} alt="Blastoise" />
-            <h2>
+      <div className="h-96 w-72 overflow-auto rounded bg-zinc-100 p-5">
+        {/* Display */}
+        <div className="flex h-full flex-col items-center">
+          <section className="mb-4 flex flex-col justify-center">
+            <small className="mb-1 self-end">10:08 50.405</small>
+            <img
+              className="max-h-52 max-w-full"
+              src={Blastoise}
+              alt="Blastoise"
+            />
+            <h2 className="mt-2 text-center text-2xl font-extrabold">
               Blastoise
               <sup>009</sup>
             </h2>
           </section>
           <section>
-            <ul>
+            <ul className="list-disc leading-none">
               <li>
                 Flash Cannon: 60 <small>(Steel)</small>
               </li>
@@ -52,11 +62,8 @@ function App() {
               </li>
             </ul>
           </section>
-          {/* <!-- End Display -->*/}
         </div>
-        {/* <!-- End Info -->*/}
       </div>
-      {/* <!-- End Card -->*/}
     </div>
   )
 }
