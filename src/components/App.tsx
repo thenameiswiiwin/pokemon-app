@@ -1,5 +1,5 @@
 import Blastoise from 'assets/blastoise.jpg'
-import Fallback from 'assets/fallback.jpg'
+// import Fallback from 'assets/fallback.jpg'
 
 function App() {
   return (
@@ -7,7 +7,7 @@ function App() {
       {/* Forum */}
       <form className="flex flex-col items-center justify-center">
         <label htmlFor="pokemonName-input">Pokemon Name</label>
-        <small>
+        <small className="font-medium">
           Try <button type="button">Venusaur</button>
           {', '}
           <button type="button">Charizard</button>
