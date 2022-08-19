@@ -1,4 +1,5 @@
 import Blastoise from 'assets/blastoise.jpg'
+import Fallback from 'assets/fallback.jpg'
 
 function App() {
   return (
@@ -33,9 +34,9 @@ function App() {
       {/* Card */}
       <div className="h-96 w-72 overflow-auto rounded bg-zinc-100 p-5">
         {/* Display */}
-        <div className="flex h-full flex-col items-center">
+        {/* <div className="flex h-full flex-col items-center">
           <section className="mb-4 flex flex-col justify-center">
-            <small className="mb-1 self-end">10:08 50.405</small>
+            <small className="self-end">10:08 50.405</small>
             <img
               className="max-h-52 max-w-full"
               src={Blastoise}
@@ -59,6 +60,28 @@ function App() {
               </li>
               <li>
                 Ice Beam: 65 <small>(Ice)</small>
+              </li>
+            </ul>
+          </section>
+        </div> */}
+
+        {/* Fallback */}
+        <div>
+          <section>
+            <small>loading...</small>
+            <img src={Fallback} alt="Fallback" />
+            <h2>
+              error
+              <sup>XXX</sup>
+            </h2>
+          </section>
+          <section>
+            <ul>
+              <li>
+                Loading Attack 1: XX <small>(Type)</small>
+              </li>
+              <li>
+                Loading Attack 2: XX <small>(Type)</small>
               </li>
             </ul>
           </section>
