@@ -1,36 +1,52 @@
 import { useState, useEffect, useRef } from 'react'
-// import Fallback from 'assets/fallback.jpg'
+import Fallback from 'assets/fallback.jpg'
 
-const pokemonQuery = `
-  {
-    pokemon(name: "venusaur") {
-      id
-      number
-      name
-      image
-      attacks {
-        special {
-          name
-          type
-          damage
+function fetchPokemon(name) {
+  const pokemonQuery = `
+  query PokemonCard($name: String){
+      pokemon(name: $name) {
+        id
+        number
+        name
+        image
+        attacks {
+          special {
+            name
+            type
+            damage
+          }
         }
       }
     }
-  }
-`
+  `
+
+  return window
+    .fetch('https://graphql-pokemon2.vercel.app/', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json;charset=UTF-8' },
+      body: JSON.stringify({
+        query: pokemonQuery,
+        variables: { name: name.toLowerCase() }
+      })
+    })
+    .then(async (res) => {
+      const { data } = await res.json()
+      const pokemon = data?.pokemon
+      if (pokemon) {
+        return pokemon
+      } else {
+        Promise.reject(new Error(`No pokemon with the name "${name}"`))
+      }
+    })
+}
 
 function PokemonCard({ pokemonName }) {
   const [pokemon, setPokemon] = useState(null)
 
   useEffect(() => {
-    window
-      .fetch('https://graphql-pokemon2.vercel.app/', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json;charset=UTF-8' },
-        body: JSON.stringify({ query: pokemonQuery })
-      })
-      .then((res) => res.json())
-      .then((data) => setPokemon(data.data.pokemon))
+    if (!pokemonName) return
+    setPokemon(null)
+    fetchPokemon(pokemonName).then((pokemon) => setPokemon(pokemon))
   }, [pokemonName])
 
   if (!pokemonName) {
@@ -78,7 +94,7 @@ function PokemonDisplayFallback({ name }) {
   const fallbackData = {
     name: initialName,
     number: 'XXX',
-    image: '/img/pokemon/fallback-pokemon.jpg',
+    image: Fallback,
     attacks: {
       special: [
         { name: 'Loading Attack 1', type: 'Type', damage: 'XX' },
