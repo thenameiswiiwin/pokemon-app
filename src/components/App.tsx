@@ -3,7 +3,7 @@ import Fallback from 'assets/fallback.jpg'
 
 function fetchPokemon(name) {
   const pokemonQuery = `
-    query PokemonCard($name: String) {
+  query PokemonCard($name: String){
       pokemon(name: $name) {
         id
         number
@@ -35,7 +35,7 @@ function fetchPokemon(name) {
       if (pokemon) {
         return pokemon
       } else {
-        return Promise.reject(new Error(`No pokemon with the "${name}"`))
+        Promise.reject(new Error(`No pokemon with the name "${name}"`))
       }
     })
 }
