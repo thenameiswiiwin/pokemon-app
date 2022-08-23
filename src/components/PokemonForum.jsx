@@ -1,9 +1,26 @@
-function PokemonForum({ pokemonName, setPokemonName }) {
-  const handleSelect = (selectedName) => setPokemonName(selectedName)
+import { useState, useEffect } from 'react'
+
+function PokemonForum({
+  pokemonName: externalPokemonName,
+  initialPokemonName = externalPokemonName || '',
+  onSubmit
+}) {
+  const [pokemonName, setPokemonName] = useState(initialPokemonName)
+
+  useEffect(() => {
+    if (typeof externalPokemonName === 'string') {
+      setPokemonName(externalPokemonName)
+    }
+  }, [externalPokemonName])
+
+  const handleSelect = (newPokemonName) => {
+    setPokemonName(newPokemonName)
+    onSubmit(newPokemonName)
+  }
   const handleChange = (e) => setPokemonName(e.target.value)
   const handleSubmit = (e) => {
     e.preventDefault()
-    setPokemonName(pokemonName)
+    onSubmit(pokemonName)
   }
 
   return (
@@ -29,6 +46,7 @@ function PokemonForum({ pokemonName, setPokemonName }) {
       <div>
         <input
           className="mt-2.5 mr-2.5 rounded-sm bg-zinc-100 px-2.5 leading-loose shadow-md"
+          id="pokemonName-input"
           placeholder="Pokemon Name..."
           value={pokemonName}
           onChange={handleChange}
