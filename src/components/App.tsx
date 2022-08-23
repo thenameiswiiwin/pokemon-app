@@ -36,40 +36,44 @@ function PokemonCard({ pokemonName }) {
   if (!pokemonName) {
     return 'Submit a pokemon'
   } else if (!pokemon) {
-    return <PokemonCardFallback name={pokemonName} />
+    return <PokemonDisplayFallback name={pokemonName} />
   } else {
-    return (
-      <div className="flex h-full flex-col items-center">
-        <section className="mb-4 flex flex-col justify-center">
-          <small className="self-end">10:08 50.405</small>
-          <img
-            className="max-h-52 max-w-full"
-            src={pokemon.image}
-            alt={pokemon.name}
-          />
-          <h2 className="mt-2 text-center text-2xl font-extrabold">
-            {pokemon.name}
-            <sup>{pokemon.number}</sup>
-          </h2>
-        </section>
-        <section>
-          <ul className="list-disc leading-none">
-            {pokemon.attacks.special.map((attack) => (
-              <li key={attack.name}>
-                <label>{attack.name}</label>:{' '}
-                <span>
-                  {pokemon.damage} <small>({attack.type})</small>
-                </span>
-              </li>
-            ))}
-          </ul>
-        </section>
-      </div>
-    )
+    return <PokemonDisplay pokemon={pokemon} />
   }
 }
 
-function PokemonCardFallback({ name }) {
+function PokemonDisplay({ pokemon }) {
+  return (
+    <div className="flex h-full flex-col items-center">
+      <section className="mb-4 flex flex-col justify-center">
+        <small className="self-end">10:08 50.405</small>
+        <img
+          className="max-h-52 max-w-full"
+          src={pokemon.image}
+          alt={pokemon.name}
+        />
+        <h2 className="mt-2 text-center text-2xl font-extrabold">
+          {pokemon.name}
+          <sup>{pokemon.number}</sup>
+        </h2>
+      </section>
+      <section>
+        <ul className="list-disc leading-none">
+          {pokemon.attacks.special.map((attack) => (
+            <li key={attack.name}>
+              <label>{attack.name}</label>:{' '}
+              <span>
+                {pokemon.damage} <small>({attack.type})</small>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
+  )
+}
+
+function PokemonDisplayFallback({ name }) {
   const initialName = useRef(name).current
   const fallbackData = {
     name: initialName,
@@ -88,9 +92,7 @@ function PokemonCardFallback({ name }) {
 
 function PokemonForum({ pokemonName, setPokemonName }) {
   const handleSelect = (selectedName) => setPokemonName(selectedName)
-
   const handleChange = (e) => setPokemonName(e.target.value)
-
   const handleSubmit = (e) => {
     e.preventDefault()
     setPokemonName(pokemonName)
