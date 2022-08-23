@@ -1,6 +1,12 @@
 import { useState, useEffect, useRef } from 'react'
 import Fallback from 'assets/fallback.jpg'
 
+const formatDate = (date) => `
+  ${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')} ${String(
+  date.getSeconds()
+).padStart(2, '0')}.${String(date.getMilliseconds()).padStart(3, '0')}
+`
+
 function fetchPokemon(name) {
   const pokemonQuery = `
   query PokemonCard($name: String){
@@ -33,6 +39,7 @@ function fetchPokemon(name) {
       const { data } = await res.json()
       const pokemon = data?.pokemon
       if (pokemon) {
+        pokemon.fetchedAt = formatDate(new Date())
         return pokemon
       } else {
         Promise.reject(new Error(`No pokemon with the name "${name}"`))
@@ -62,7 +69,7 @@ function PokemonDisplay({ pokemon }) {
   return (
     <div className="flex h-full flex-col items-center">
       <section className="mb-4 flex flex-col justify-center">
-        <small className="self-end">10:08 50.405</small>
+        <small className="self-end">{pokemon.fetchedAt}</small>
         <img
           className="max-h-52 max-w-full"
           src={pokemon.image}
