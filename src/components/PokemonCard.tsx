@@ -1,11 +1,16 @@
 import { useState, useEffect } from 'react'
+import type { PokemonData } from '../types'
 import PokemonDisplay from './CardDisplay'
 import PokemonDisplayFallback from './CardDisplayFallback'
-// import ErrorFallback from './ErrorFallback'
-import fetchPokemon from 'utils/index.ts'
+import fetchPokemon from 'utils/index'
 
-function PokemonCard({ pokemonName }) {
-  const [{ pokemon, error, status }, setState] = useState({
+type PokemonCardState = {
+  status: 'pending' | 'idle' | 'resolved' | 'rejected'
+  pokemon?: null | PokemonData
+  error?: null | Error
+}
+function PokemonCard({ pokemonName }: { pokemonName: string }) {
+  const [{ pokemon, error, status }, setState] = useState<PokemonCardState>({
     pokemon: null,
     error: null,
     status: pokemonName ? 'pending' : 'idle'
@@ -25,7 +30,7 @@ function PokemonCard({ pokemonName }) {
   }, [pokemonName])
 
   if (status === 'idle') {
-    return 'Submit a pokemon'
+    return <span>Submit a pokemon</span>
   } else if (status === 'pending') {
     return <PokemonDisplayFallback name={pokemonName} />
   } else if (status === 'rejected') {

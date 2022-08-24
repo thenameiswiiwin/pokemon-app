@@ -1,4 +1,6 @@
-function CardDisplay({ pokemon }) {
+import type { PokemonData } from '../types'
+
+function CardDisplay({ pokemon }: { pokemon: PokemonData }) {
   return (
     <div className="flex h-full flex-col items-center">
       <section className="mb-4 flex flex-col justify-center">
@@ -19,7 +21,8 @@ function CardDisplay({ pokemon }) {
             <li key={attack.name}>
               <label>{attack.name}</label>:{' '}
               <span>
-                {pokemon.damage} <small>({attack.type})</small>
+                {attack.damage < 0 ? 'XX' : attack.damage}{' '}
+                <small>({attack.type})</small>
               </span>
             </li>
           ))}
