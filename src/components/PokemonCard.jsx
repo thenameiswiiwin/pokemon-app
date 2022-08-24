@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react'
 import PokemonDisplay from './CardDisplay'
 import PokemonDisplayFallback from './CardDisplayFallback'
-import ErrorFallback from './ErrorFallback'
+// import ErrorFallback from './ErrorFallback'
 import fetchPokemon from 'utils/index.ts'
 
 function PokemonCard({ pokemonName }) {
   const [{ pokemon, error, status }, setState] = useState({
     pokemon: null,
     error: null,
-    status: 'idle'
+    status: pokemonName ? 'pending' : 'idle'
   })
 
   useEffect(() => {
@@ -29,7 +29,7 @@ function PokemonCard({ pokemonName }) {
   } else if (status === 'pending') {
     return <PokemonDisplayFallback name={pokemonName} />
   } else if (status === 'rejected') {
-    return <ErrorFallback error={error} />
+    throw error
   } else if (status === 'resolved') {
     return <PokemonDisplay pokemon={pokemon} />
   }
