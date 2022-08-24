@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react'
 
-function PokemonForum({
+function PokemonForm({
   pokemonName: externalPokemonName,
   initialPokemonName = externalPokemonName || '',
   onSubmit
+}: {
+  pokemonName: string
+  initialPokemonName?: string
+  onSubmit: (newPokemonName: string) => void
 }) {
   const [pokemonName, setPokemonName] = useState(initialPokemonName)
 
@@ -13,12 +17,13 @@ function PokemonForum({
     }
   }, [externalPokemonName])
 
-  const handleSelect = (newPokemonName) => {
+  const handleSelect = (newPokemonName: string) => {
     setPokemonName(newPokemonName)
     onSubmit(newPokemonName)
   }
-  const handleChange = (e) => setPokemonName(e.target.value)
-  const handleSubmit = (e) => {
+  const handleChange = (e: React.SyntheticEvent<HTMLInputElement>) =>
+    setPokemonName(e.currentTarget.value)
+  const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
     onSubmit(pokemonName)
   }
@@ -63,4 +68,4 @@ function PokemonForum({
   )
 }
 
-export default PokemonForum
+export default PokemonForm

@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import CardDisplay from './CardDisplay'
 import Fallback from 'assets/fallback.jpg'
 
-function CardDisplayFallback({ name }) {
+function CardDisplayFallback({ name }: { name: string }) {
   const initialName = useRef(name).current
   const fallbackData = {
     name: initialName,
