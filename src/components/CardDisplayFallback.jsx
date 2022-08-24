@@ -1,8 +1,8 @@
 import { useRef } from 'react'
-import PokemonDisplay from './PokemonDisplay'
+import CardDisplay from './CardDisplay'
 import Fallback from 'assets/fallback.jpg'
 
-function PokemonDisplayFallback({ name }) {
+function CardDisplayFallback({ name }) {
   const initialName = useRef(name).current
   const fallbackData = {
     name: initialName,
@@ -16,7 +16,7 @@ function PokemonDisplayFallback({ name }) {
     },
     fetchedAt: 'loading...'
   }
-  return <PokemonDisplay pokemon={fallbackData} />
+  return <CardDisplay pokemon={fallbackData} />
 }
 
-export default PokemonDisplayFallback
+export default CardDisplayFallback
