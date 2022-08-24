@@ -1,35 +1,35 @@
 import { useState, useEffect } from 'react'
 import PokemonDisplay from './CardDisplay'
 import PokemonDisplayFallback from './CardDisplayFallback'
+import ErrorFallback from './ErrorFallback'
 import fetchPokemon from 'utils/index.ts'
 
 function PokemonCard({ pokemonName }) {
   const [pokemon, setPokemon] = useState(null)
   const [error, setError] = useState(null)
+  const [status, setStatus] = useState('idle')
 
   useEffect(() => {
     if (!pokemonName) return
-    setPokemon(null)
+    setStatus('pending')
     fetchPokemon(pokemonName).then(
-      (pokemon) => setPokemon(pokemon),
-      (error) => setError(error)
+      (pokemon) => {
+        setPokemon(pokemon), setStatus('resolved')
+      },
+      (error) => {
+        setError(error)
+        setStatus('rejected')
+      }
     )
   }, [pokemonName])
 
-  if (error) {
-    return (
-      <div role="alert">
-        <h3 className="font-bold">There was an error:</h3>
-        <p className="mt-2 font-medium whiteSpace-normal">{error.message}</p>
-      </div>
-    )
-  }
-
-  if (!pokemonName) {
+  if (status === 'idle') {
     return 'Submit a pokemon'
-  } else if (!pokemon) {
+  } else if (status === 'pending') {
     return <PokemonDisplayFallback name={pokemonName} />
-  } else {
+  } else if (status === 'rejected') {
+    return <ErrorFallback error={error} />
+  } else if (status === 'resolved') {
     return <PokemonDisplay pokemon={pokemon} />
   }
 }
