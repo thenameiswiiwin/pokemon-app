@@ -5,20 +5,21 @@ import ErrorFallback from './ErrorFallback'
 import fetchPokemon from 'utils/index.ts'
 
 function PokemonCard({ pokemonName }) {
-  const [pokemon, setPokemon] = useState(null)
-  const [error, setError] = useState(null)
-  const [status, setStatus] = useState('idle')
+  const [{ pokemon, error, status }, setState] = useState({
+    pokemon: null,
+    error: null,
+    status: 'idle'
+  })
 
   useEffect(() => {
     if (!pokemonName) return
-    setStatus('pending')
+    setState({ status: 'pending' })
     fetchPokemon(pokemonName).then(
       (pokemon) => {
-        setPokemon(pokemon), setStatus('resolved')
+        setState({ pokemon, status: 'resolved' })
       },
       (error) => {
-        setError(error)
-        setStatus('rejected')
+        setState({ error, status: 'rejected' })
       }
     )
   }, [pokemonName])
